@@ -30,7 +30,7 @@ public class CrimeFragment extends Fragment {
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
     }
 
-    public static CrimeFragment newInstance(UUID crimeID){
+    public static CrimeFragment newInstance(UUID crimeID){// FIXME для создания самого Fragment!
         Bundle args = new Bundle();
         args.putSerializable(ARG_CRIME_ID,crimeID);
         CrimeFragment fragment = new CrimeFragment();
