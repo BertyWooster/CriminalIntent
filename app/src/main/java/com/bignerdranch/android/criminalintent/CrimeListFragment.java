@@ -16,11 +16,10 @@ import java.util.Date;
 import java.util.List;
 
 public class CrimeListFragment extends Fragment {
-    private RecyclerView mCrimeRecyclerView; // FIXME RecyclerView класс для отображения списка.
+    private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
-    private static final int REQUEST_EXEMPLE_ID = 0;
-    public static final String PUT_EXTRA_TO_CRIME_ACTIVITY = "extra";
-    private int current_index = -1;
+    private Integer mCurrentIndex;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -34,7 +33,6 @@ public class CrimeListFragment extends Fragment {
    }
 
 
-
     private void updateUI(){
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
@@ -42,12 +40,9 @@ public class CrimeListFragment extends Fragment {
             mAdapter = new CrimeAdapter(crimes);
             mCrimeRecyclerView.setAdapter(mAdapter); }
             else{
-            if(current_index != -1){
-                mAdapter.notifyItemChanged(current_index);
-                current_index = -1;
-            } //FIXME разобраться с сохранением данных.
-        }
-
+            if(mCurrentIndex != null){
+            mAdapter.notifyItemChanged(mCurrentIndex);}
+            }
     }
 
     @Override
@@ -66,10 +61,9 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onClick(View v){// откуда View??
-            Intent intent = CrimeActivity.newIntent(getActivity(),mCrime.getId());
-            int index = mAdapter.giveIndexOfCrime(mCrime);
-            intent.putExtra(PUT_EXTRA_TO_CRIME_ACTIVITY,index);
-            startActivityForResult(intent, REQUEST_EXEMPLE_ID);
+        Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
+        startActivity(intent);
+        mCurrentIndex = mAdapter.giveIndexOfCrime(mCrime);
         }
 
 
@@ -95,7 +89,7 @@ public class CrimeListFragment extends Fragment {
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder>{
         private List<Crime> mCrimes;
 
-        public CrimeAdapter(List<Crime> crimes){ // FIXME Конструктор CrimeAdapter!
+        public CrimeAdapter(List<Crime> crimes){
             mCrimes = crimes;}
 
         @Override
@@ -121,20 +115,6 @@ public class CrimeListFragment extends Fragment {
          return mCrimes.indexOf(crime);
         }
 
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent result){
-
-        if(resultCode != Activity.RESULT_OK){
-            return;
-        }if(requestCode == REQUEST_EXEMPLE_ID){
-            if (result == null){return;}
-            int index = result.getExtras().getInt(CrimeActivity.RETURN_DATA_TO_CRIMELISTFRAGMENT);
-            if(index == -1){return;}
-            else {
-                current_index = index;}
-        }
     }
 
 }
