@@ -3,6 +3,7 @@ package com.bignerdranch.android.criminalintent;
 import java.text.DateFormat;
 import java.text.FieldPosition;
 import java.text.ParsePosition;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
@@ -10,14 +11,14 @@ import java.util.UUID;
 public class Crime {
     private UUID mId;
     private String mTitle;
-    private DateFormat mDate;// FIXME Остается под вопросом!!
+    private Calendar mDate;
     private boolean mSolved;
 
 
     public Crime(){
         // Генерирование уникального идентификатора
         mId = UUID.randomUUID();
-        mDate = DateFormat.getDateInstance(DateFormat.LONG, Locale.ENGLISH);
+        mDate = Calendar.getInstance();
      }
 
     public UUID getId() {
@@ -29,11 +30,11 @@ public class Crime {
         return mTitle;
     }
 
-    public DateFormat getDate() {
+    public Calendar getDate() {
         return mDate;
     }
 
-    public void setDate(DateFormat date) {
+    public void setDate(Calendar date) {
         mDate = date;
     }
 
