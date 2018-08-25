@@ -114,7 +114,8 @@ public class CrimeListFragment extends Fragment {
             else{
             if(mCurrentIndex != null){
                 //FIXME           mAdapter.notifyItemChanged(mCurrentIndex); - temporary solution!
-            mAdapter.notifyDataSetChanged();
+                mAdapter.setCrimes(crimes);
+                mAdapter.notifyDataSetChanged();
             }
 
         }
@@ -191,6 +192,11 @@ public class CrimeListFragment extends Fragment {
         int giveIndexOfCrime(Crime crime){
          return mCrimes.indexOf(crime);
         }
+
+        public void setCrimes(List<Crime> crimes){
+            mCrimes = crimes;
+        }
+
 
     }
 

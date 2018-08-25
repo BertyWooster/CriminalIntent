@@ -21,6 +21,11 @@ public class Crime {
         mDate = Calendar.getInstance();
      }
 
+    public Crime(UUID id){
+        mId = id;
+        mDate = Calendar.getInstance();
+    }
+
     public UUID getId() {
         return mId;
     }

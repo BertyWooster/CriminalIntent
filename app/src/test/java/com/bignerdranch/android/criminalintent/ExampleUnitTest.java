@@ -22,6 +22,9 @@ public class ExampleUnitTest {
     @Test
     public void testStudyCalenar() {
         Calendar calendar = Calendar.getInstance();
+
+
+        /*
         Date time = calendar.getTime();
 
         String pattern = "yyyy-MM-dd";
@@ -31,5 +34,20 @@ public class ExampleUnitTest {
 
         System.out.println(date);
         int a = 10;
+*/
+        Long millis = calendar.getTimeInMillis();
+       /*
+        Date date = new Date(millis);
+        Calendar resultCalendar = Calendar.getInstance();
+        resultCalendar.clear();
+        resultCalendar.setTime(date);
+        System.out.print(resultCalendar.getTime().toString());
+        */
+       String testString = millis.toString();
+       long millisLong = Long.valueOf(testString);
+       System.out.print(millisLong);
+
+
+
     }
 }
