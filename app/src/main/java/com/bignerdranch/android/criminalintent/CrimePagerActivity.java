@@ -1,5 +1,6 @@
 package com.bignerdranch.android.criminalintent;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,9 +8,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,12 +27,22 @@ public class CrimePagerActivity extends AppCompatActivity {
         return intent;
     }
 
+    public void startDialogFragment(File file){
+        Bundle bundle = new Bundle();
+        DialogFragment dialogFragment = new DialogFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        String filePath = file.getPath();
+        bundle.putString("FILEPATH",filePath);
+        dialogFragment.setArguments(bundle);
+        transaction.add(R.id.containerForFragment, dialogFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crime_pager);
-
         UUID crimeID = (UUID) getIntent().getSerializableExtra(EXTRA_CRIME_ID);
         mViewPager = (ViewPager) findViewById(R.id.activity_crime_pager_view_pager);
         mCrimes = CrimeLab.get(this).getCrimes();
